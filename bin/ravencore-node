@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-var ravencore = require('../lib/cli/ravencore');
-ravencore();
+var ritocore = require('../lib/cli/ritocore');
+ritocore();

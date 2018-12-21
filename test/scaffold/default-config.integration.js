@@ -6,20 +6,20 @@ var sinon = require('sinon');
 var proxyquire = require('proxyquire');
 
 describe('#defaultConfig', function() {
-  var expectedExecPath = path.resolve(__dirname, '../../bin/ravend');
+  var expectedExecPath = path.resolve(__dirname, '../../bin/ritod');
 
   it('will return expected configuration', function() {
     var config = JSON.stringify({
       network: 'livenet',
       port: 3001,
       services: [
-        'ravend',
+        'ritod',
         'web'
       ],
       servicesConfig: {
-        ravend: {
+        ritod: {
           spawn: {
-            datadir: process.env.HOME + '/.ravencore/data',
+            datadir: process.env.HOME + '/.ritocore/data',
             exec: expectedExecPath
           }
         }
@@ -29,7 +29,7 @@ describe('#defaultConfig', function() {
       fs: {
         existsSync: sinon.stub().returns(false),
         writeFileSync: function(path, data) {
-          path.should.equal(process.env.HOME + '/.ravencore/ravencore-node.json');
+          path.should.equal(process.env.HOME + '/.ritocore/ritocore-node.json');
           data.should.equal(config);
         },
         readFileSync: function() {
@@ -42,29 +42,29 @@ describe('#defaultConfig', function() {
     });
     var home = process.env.HOME;
     var info = defaultConfig();
-    info.path.should.equal(home + '/.ravencore');
+    info.path.should.equal(home + '/.ritocore');
     info.config.network.should.equal('livenet');
     info.config.port.should.equal(3001);
-    info.config.services.should.deep.equal(['ravend', 'web']);
-    var ravend = info.config.servicesConfig.ravend;
-    should.exist(ravend);
-    ravend.spawn.datadir.should.equal(home + '/.ravencore/data');
-    ravend.spawn.exec.should.equal(expectedExecPath);
+    info.config.services.should.deep.equal(['ritod', 'web']);
+    var ritod = info.config.servicesConfig.ritod;
+    should.exist(ritod);
+    ritod.spawn.datadir.should.equal(home + '/.ritocore/data');
+    ritod.spawn.exec.should.equal(expectedExecPath);
   });
   it('will include additional services', function() {
     var config = JSON.stringify({
       network: 'livenet',
       port: 3001,
       services: [
-        'ravend',
+        'ritod',
         'web',
         'insight-api',
         'insight-ui'
       ],
       servicesConfig: {
-        ravend: {
+        ritod: {
           spawn: {
-            datadir: process.env.HOME + '/.ravencore/data',
+            datadir: process.env.HOME + '/.ritocore/data',
             exec: expectedExecPath
           }
         }
@@ -74,7 +74,7 @@ describe('#defaultConfig', function() {
       fs: {
         existsSync: sinon.stub().returns(false),
         writeFileSync: function(path, data) {
-          path.should.equal(process.env.HOME + '/.ravencore/ravencore-node.json');
+          path.should.equal(process.env.HOME + '/.ritocore/ritocore-node.json');
           data.should.equal(config);
         },
         readFileSync: function() {
@@ -89,18 +89,18 @@ describe('#defaultConfig', function() {
     var info = defaultConfig({
       additionalServices: ['insight-api', 'insight-ui']
     });
-    info.path.should.equal(home + '/.ravencore');
+    info.path.should.equal(home + '/.ritocore');
     info.config.network.should.equal('livenet');
     info.config.port.should.equal(3001);
     info.config.services.should.deep.equal([
-      'ravend',
+      'ritod',
       'web',
       'insight-api',
       'insight-ui'
     ]);
-    var ravend = info.config.servicesConfig.ravend;
-    should.exist(ravend);
-    ravend.spawn.datadir.should.equal(home + '/.ravencore/data');
-    ravend.spawn.exec.should.equal(expectedExecPath);
+    var ritod = info.config.servicesConfig.ritod;
+    should.exist(ritod);
+    ritod.spawn.datadir.should.equal(home + '/.ritocore/data');
+    ritod.spawn.exec.should.equal(expectedExecPath);
   });
 });
