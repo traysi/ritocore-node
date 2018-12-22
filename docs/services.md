@@ -1,16 +1,16 @@
 # Services
-Ravencore Node has a service module system that can start up additional services that can include additional:
+Ritocore Node has a service module system that can start up additional services that can include additional:
 - Blockchain indexes (e.g. querying balances for addresses)
 - API methods
 - HTTP routes
 - Event types to publish and subscribe
 
-The `ravencore-node.json` file describes which services will load for a node:
+The `ritocore-node.json` file describes which services will load for a node:
 
 ```json
 {
   "services": [
-    "ravend", "web"
+    "ritod", "web"
   ]
 }
 ```
@@ -20,36 +20,36 @@ Services correspond with a Node.js module as described in 'package.json', for ex
 ```json
 {
   "dependencies": {
-    "ravencore-lib": "underdarkskies/ravencore-lib",
-    "ravencore-node": "underdarkskies/ravencore-node",
-    "insight-api": "underdarkskies/insight-api"
+    "ritocore-lib": "traysi/ritocore-lib",
+    "ritocore-node": "traysi/ritocore-node",
+    "insight-api": "traysi/insight-api"
   }
 }
 ```
 
-_Note:_ If you already have a ravencore-node database, and you want to query data from previous blocks in the blockchain, you will need to reindex. Reindexing right now means deleting your ravencore-node database and resyncing.
+_Note:_ If you already have a ritocore-node database, and you want to query data from previous blocks in the blockchain, you will need to reindex. Reindexing right now means deleting your ritocore-node database and resyncing.
 
 ## Using Services Programmatically
 If, instead, you would like to run a custom node, you can include services by including them in your configuration object when initializing a new node.
 
 ```js
-//Require ravencore
-var ravencore = require('ravencore-node');
+//Require ritocore
+var ritocore = require('ritocore-node');
 
 //Services
-var Ravencoin = ravencore.services.Ravencoin;
-var Web = ravencore.services.Web;
+var Ritocoin = ritocore.services.Ritocoin;
+var Web = ritocore.services.Web;
 
-var myNode = new ravencore.Node({
+var myNode = new ritocore.Node({
   network: 'regtest'
   services: [
     {
-      name: 'ravend',
-      module: Ravencoin,
+      name: 'ritod',
+      module: Ritocoin,
       config: {
         spawn: {
-          datadir: '/home/<username>/.raven',
-          exec: '/home/<username>/ravencore-node/bin/ravend'
+          datadir: '/home/<username>/.rito',
+          exec: '/home/<username>/ritocore-node/bin/ritod'
         }
       }
     },
@@ -67,7 +67,7 @@ var myNode = new ravencore.Node({
 Now that you've loaded your services you can access them via `myNode.services.<service-name>.<method-name>`. For example if you wanted to check the balance of an address, you could access the address service like so.
 
 ```js
-myNode.services.ravend.getAddressBalance('1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v', false, function(err, total) {
+myNode.services.ritod.getAddressBalance('1HB5XMLmzFVj8ALj6mfBsbifRoD4miY36v', false, function(err, total) {
   console.log(total.balance); //Satoshi amount of this address
 });
 ```
@@ -82,6 +82,6 @@ A new service can be created by inheriting from `Node.Service` and implementing 
 - `Service.prototype.getPublishEvents()` - Describes which events can be subscribed to for this service, useful to subscribe to events over the included web socket API.
 - `Service.prototype.setupRoutes()` - A service can extend HTTP routes on an express application by implementing this method.
 
-The `package.json` for the service module can either export the `Node.Service` directly, or specify a specific module to load by including `"ravencoreNode": "lib/ravencore-node.js"`.
+The `package.json` for the service module can either export the `Node.Service` directly, or specify a specific module to load by including `"ritocoreNode": "lib/ritocore-node.js"`.
 
 Please take a look at some of the existing services for implementation specifics.

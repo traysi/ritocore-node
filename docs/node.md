@@ -14,17 +14,17 @@ A node represents a collection of services that are loaded together. For more in
 
 ```js
 
-var index = require('ravencore-node');
-var Ravencoin = index.services.Ravencoin;
+var index = require('ritocore-node');
+var Ritocoin = index.services.Ritocoin;
 var Node = index.Node;
 
 var configuration = {
-  datadir: '/home/user/.raven',
+  datadir: '/home/user/.rito',
   network: 'testnet',
   services: [
     {
-      name: 'ravend',
-      module: Ravencoin,
+      name: 'ritod',
+      module: Ritocoin,
       config: {}
     }
   ]
@@ -37,7 +37,7 @@ node.start(function() {
 });
 
 node.on('ready', function() {
-  console.log('Ravencoin Node Ready');
+  console.log('Ritocoin Node Ready');
 });
 
 node.on('error', function(err) {

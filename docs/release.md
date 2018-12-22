@@ -1,10 +1,10 @@
 # Release Process
 
-Binaries for ravend are distributed for convenience and built deterministically with Gitian, signatures for ravend are located at the [gitian.sigs](https://github.com/underdarkskies/gitian.sigs) respository.
+Binaries for ritod are distributed for convenience and built deterministically with Gitian, signatures for ritod are located at the [gitian.sigs](https://github.com/traysi/gitian.sigs) respository.
 
 ## How to Release
 
-When publishing to npm, the .gitignore file is used to exclude files from the npm publishing process. Be sure that the ravencore-node directory has only the directories and files that you would like to publish to npm. You might need to run the commands below on each platform that you intend to publish (e.g. Mac and Linux).
+When publishing to npm, the .gitignore file is used to exclude files from the npm publishing process. Be sure that the ritocore-node directory has only the directories and files that you would like to publish to npm. You might need to run the commands below on each platform that you intend to publish (e.g. Mac and Linux).
 
 To make a release, bump the `version` of the `package.json`:
 
